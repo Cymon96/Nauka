@@ -50,7 +50,6 @@ while True:
             if search in Pets:
                 print("\n")
                 for key, value in Pets[search].items():
-                    if key != search:
                         print(f"{key}: {value}")
         case _:
             print("Wybrałeś błędną pozycję. Spróbuj ponownie za 5 sekund")

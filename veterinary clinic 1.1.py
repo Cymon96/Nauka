@@ -34,7 +34,6 @@ while True:
             print("\n")
             print(f"Zarejestrowano zwierzę o imieniu: {Name}")
             for key, value in Pets[Name].items():
-                if key != "Imię":
                     print(f"{key}: {value}")
         case Menu.Unregister:
             unregister = input("Podaj imie zwierzecia które chcesz wyrejestrować: ").capitalize()

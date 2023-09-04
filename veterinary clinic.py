@@ -1,10 +1,17 @@
 # Program do dodawania oraz usuwania pacjnetów i ich danych w placówce weterynaryjnej
 
-import time
 from enum import IntEnum
+import pet_data
 
-Menu = IntEnum("Menu", "Register Unregister Show Search")
-Pets = {}
+
+class Menu(IntEnum):
+    register = 1
+    unregister = 2
+    show = 3
+    search = 4
+
+
+pets = {}
 
 while True:
     print("\n")
@@ -12,47 +19,49 @@ while True:
     print("1 - Zarejestruj pacjenta\n2 - Wyrejestruj pacjenta\n3 - "
           "Wyświetl wszystkich zarejestrowanych pacjentów\n4 - Znajdź w bazie pacjenta")
 
-    choice = int(input("Wybierz działanie: "))
-    Choice = Menu(choice)
+    choice = pet_data.get_choise()
+    action = Menu(choice)
 
-    match Choice:
-        case Menu.Register:
+    match action:
+        case Menu.register:
             print("\n")
-            Name = input("Podaj imie zwierzecia: ").capitalize()
-            Species = input("Podaj gatunek zwierzęcia: ").capitalize()
-            Age = input("Podaj wiek zwierzęcia: ") + " Lat"
-            Weight = input("Podaj wagę zwierzęcia: ") + "Kg"
-            OwnersName = input("Podaj imie właściciela: ").capitalize()
-            OwnersSurname = input("Podaj nazwisko właściciela: ").capitalize()
 
-            Pets[Name] = {
-                "Imie": Name,
-                "Gatunek": Species,
-                "Wiek": Age,
-                "Waga": Weight,
-                "Imie opiekuna": OwnersName,
-                "Nazwisko opiekuna": OwnersSurname
+            name = pet_data.get_name()
+            species = pet_data.get_species()
+            age = pet_data.get_age()
+            weight = pet_data.get_weight()
+            onwers_name = pet_data.get_owners_name()
+            owners_surname = pet_data.get_owners_surname()
+
+            pets[name] = {
+                "Imie": name,
+                "Gatunek": species,
+                "Wiek": age,
+                "Waga": weight,
+                "Imie opiekuna": onwers_name,
+                "Nazwisko opiekuna": owners_surname
             }
+
             print("\n")
-            print(f"Zarejestrowano zwierzę o imieniu: {Name}")
-            for key, value in Pets[Name].items():
-                    print(f"{key}: {value}")
-        case Menu.Unregister:
+            print(f"Zarejestrowano zwierzę o imieniu: {name}")
+            for key, value in pets[name].items():
+                print(f"{key}: {value}")
+
+        case Menu.unregister:
             unregister = input("Podaj imie zwierzecia które chcesz wyrejestrować: ").capitalize()
-            if unregister in Pets:
-                del Pets[unregister]
+            if unregister in pets:
+                del pets[unregister]
                 print("Wyrejestrowano zwierze o imieniu: ", unregister)
-        case Menu.Show:
-            for patient in Pets:
+
+        case Menu.show:
+            for patient in pets:
                 print("\n")
-                for data in Pets[patient]:
-                    print(data, Pets[patient][data])
-        case Menu.Search:
+                for info in pets[patient]:
+                    print(info, pets[patient][info])
+
+        case Menu.search:
             search = input("Podaj imie zwierzęcia: ").capitalize()
-            if search in Pets:
+            if search in pets:
                 print("\n")
-                for key, value in Pets[search].items():
-                        print(f"{key}: {value}")
-        case _:
-            print("Wybrałeś błędną pozycję. Spróbuj ponownie za 5 sekund")
-            time.sleep(5)
+                for key, value in pets[search].items():
+                    print(f"{key}: {value}")
